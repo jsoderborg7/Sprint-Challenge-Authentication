@@ -8,21 +8,21 @@ module.exports = {
 }
 
 function add(user){
-  return db('auth')
+  return db('users')
   .insert(user)
 }
 
 function find(){
-  return db('auth')
+  return db('users')
 }
 
 function findBy(filter){
-  return db('auth')
+  return db('users')
   .where(filter)
 }
 
 function findById(id){
-  return db('auth')
+  return db('users')
   .where({id})
   .first()
 }

@@ -1,20 +1,19 @@
-const express = require('express');
+const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const Users = require('./auth-model');
 
 const secrets = require('../config/secrets');
 
-const router = require('express').Router();
-
 router.post('/register', (req, res) => {
-  const user = req.body;
+  let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
   Users.add(user)
-    .then(user =>{
-      res.status(200).json(user)
+    .then(registered =>{
+      res.status(200).json(registered)
     })
     .catch(err =>{
       res.status(500).json({Message: "Could not register user"})
@@ -38,6 +37,7 @@ router.post('/login', (req, res) => {
       res.status(500).json({message: "Could not log in user"})
     })
 });
+
 
 function generateToken(user){
   const payload ={
