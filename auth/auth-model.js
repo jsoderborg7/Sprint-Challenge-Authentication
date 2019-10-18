@@ -10,6 +10,11 @@ module.exports = {
 function add(user){
   return db('users')
   .insert(user)
+  .then(ids =>{
+    return db('users')
+    .where({id: ids[0]})
+    .first()
+  })
 }
 
 function find(){
